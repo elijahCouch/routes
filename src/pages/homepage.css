@@ -1,0 +1,45 @@
+/* styles.css */
+
+/* Center the content */
+div {
+    text-align: center;
+    margin: 50px auto;
+    max-width: 600px;
+  }
+  
+  /* Style the heading */
+  h1 {
+    font-size: 36px;
+    color: #333;
+  }
+  
+  /* Style the subheading */
+  h2 {
+    font-size: 24px;
+    color: #666;
+  }
+  
+  /* Style paragraphs */
+  p {
+    font-size: 18px;
+    line-height: 1.5;
+    color: #777;
+  }
+  
+  /* Style the button */
+  button {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    margin-top: 20px;
+  }
+  
+  /* Style the button on hover */
+  button:hover {
+    background-color: #0056b3;
+  }
+  
