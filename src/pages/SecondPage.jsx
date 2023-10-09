@@ -6,11 +6,12 @@ import {
   YAxis,
   Tooltip,
   ResponsiveContainer,
-  ReferenceLine,
   Text,
+  ReferenceLine,
 } from 'recharts';
-import './secondpage.css'; 
+import './secondpage.css';
 import { Link } from 'react-router-dom';
+
 function App() {
   const [bitcoinData, setBitcoinData] = useState([]);
   const [targetPrice, setTargetPrice] = useState('');
@@ -32,34 +33,19 @@ function App() {
   const handleTargetPriceChange = (e) => {
     const enteredPrice = parseFloat(e.target.value);
 
-    const matchingData = bitcoinData
-      .filter(entry => Math.abs(entry.price - enteredPrice) <= 10);
+    const matchingData = bitcoinData.filter(
+      (entry) => Math.abs(entry.price - enteredPrice) <= 10
+    );
 
     setTargetPrice(enteredPrice.toString());
     setMatchingData(matchingData);
   };
 
-  const customTooltip = (data) => {
-    if (data.active && data.payload) {
-      const date = new Date(data.label);
-      const price = data.payload[0].value;
-
-      return (
-        <div className="custom-tooltip-box">
-          <p>Date: {date.toLocaleDateString()}</p>
-          <p>Price: {price}</p>
-        </div>
-      );
-    }
-
-    return null;
-  };
-
   return (
     <div className="App">
-      <h1>Timeing traider</h1>
+      <h1>Timing Trader</h1>
       <div>
-        <label htmlFor="targetPrice">prices</label>
+        <label htmlFor="targetPrice">Price</label>
         <input
           type="number"
           id="targetPrice"
@@ -71,41 +57,25 @@ function App() {
         <LineChart data={bitcoinData}>
           <XAxis dataKey="date" domain={['auto', 'auto']} />
           <YAxis domain={['dataMin', 'dataMax']} />
-          <Tooltip content={customTooltip} />
           <Line type="monotone" dataKey="price" stroke="#8884d8" dot={false} />
-          {matchingData.map((dataPoint, index) => (
-            <React.Fragment key={index}>
-              <ReferenceLine
-                x={dataPoint.date.getTime()}
-                stroke="red"
-                strokeWidth={1}
-              />
-              <Text
-                x={dataPoint.date.getTime()}
-                y={10}
-                dy={-15 - (index * 15)}
-                textAnchor="left"
-                fill="red"
-                fontSize={12}
-              >
-                {`Bitcoin hit ${targetPrice} on ${dataPoint.date.toLocaleDateString()} - Price: ${dataPoint.price}`}
-              </Text>
-            </React.Fragment>
-          ))}
+          {matchingData.length > 0 && (
+            <ReferenceLine
+              y={matchingData[0].price}
+              stroke="red"
+              strokeWidth={1}
+            />
+          )}
         </LineChart>
       </ResponsiveContainer>
-    
+
       <div className="matching-info">
-        <p>
-          bitcoin hit the price target {matchingData.length} the date on the time and prices:
-        </p>
-        <ul>
-          {matchingData.map((dataPoint, index) => (
-            <li key={index}>{`${dataPoint.date.toLocaleDateString()} - Price: ${dataPoint.price}`}</li>
-          ))}
-        </ul>
+        {matchingData.length > 0 && (
+          <p>
+            Bitcoin hit the price target on {matchingData[0].date.toLocaleDateString()} - Price: {matchingData[0].price}
+          </p>
+        )}
       </div>
-      <h1>To go back </h1>
+      <h1>To go back</h1>
       <Link to="/">
         <button>click here</button>
       </Link>
