@@ -4,9 +4,7 @@ import {
   Line,
   XAxis,
   YAxis,
-  Tooltip,
   ResponsiveContainer,
-  Text,
   ReferenceLine,
 } from 'recharts';
 import './secondpage.css';
